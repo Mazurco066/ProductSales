@@ -672,6 +672,22 @@ public class SalesView extends javax.swing.JInternalFrame {
 
     private void btnSaleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaleMouseClicked
         // Ações Botão Realizar Pedido
+        order.setID(orderBus.getID());
+        orderBus.increment();
+        itemList.getItemList().stream().forEach((ItemOrder _item) -> {
+            Product _product = new Product();
+            _product = _item.getProduct();
+            _product.setAmount(_product.getAmount() - _item.getAmount());
+            prodBus.editProduct(_product);
+            order.addItem(_item); 
+        });
+        order.generateSubtotal();
+        
+        //Pedido Emitido com Sucesso
+        JOptionPane.showMessageDialog(null, "Venda Realizada com Valor Total de R$" + order.getSubtotal());
+        reset();
+        displayInfo();
+        
     }//GEN-LAST:event_btnSaleMouseClicked
 
     // </editor-fold>

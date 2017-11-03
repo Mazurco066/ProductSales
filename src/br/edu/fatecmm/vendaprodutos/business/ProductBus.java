@@ -51,7 +51,7 @@ public class ProductBus {
                 _item.setDescription(p.getDescription());
                 _item.setAmount(p.getAmount());
                 _item.setPrice(p.getPrice());
-                JOptionPane.showMessageDialog(null, "Produto Atualizado!");
+                
             }
         });
        
@@ -64,7 +64,6 @@ public class ProductBus {
             if (p.getID() == _item.getID()){
                 
                 products.remove(_item);
-                JOptionPane.showMessageDialog(null, "Produto Deletado!");
                 break;
                 
             }

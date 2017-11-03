@@ -32,7 +32,11 @@ public class OrderBus {
     }
     
     //Métodos de Negócio
-    public void addOroder(Order order){
+    public void increment(){
+        this.ID++;
+    }
+    
+    public void addOrder(Order order){
         orders.add(order);
     }
     
