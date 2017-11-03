@@ -1,5 +1,6 @@
 package br.edu.fatecmm.vendaprodutos.view;
 
+import br.edu.fatecmm.vendaprodutos.business.ItemOrderBus;
 import br.edu.fatecmm.vendaprodutos.business.OrderBus;
 import br.edu.fatecmm.vendaprodutos.business.ProductBus;
 import br.edu.fatecmm.vendaprodutos.model.ItemOrder;
@@ -8,8 +9,7 @@ import br.edu.fatecmm.vendaprodutos.model.Product;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,7 +20,9 @@ public class SalesView extends javax.swing.JInternalFrame {
     protected ProductBus prodBus;
     protected OrderBus orderBus;
     protected Order order;
-    protected List<ItemOrder> itemList;
+    protected ItemOrderBus itemList;
+    protected int itemAmount = 0;
+    protected double totalValue = 0.0;
     
     // <editor-fold defaultstate="collapsed" desc="Construtores">
     
@@ -29,9 +31,10 @@ public class SalesView extends javax.swing.JInternalFrame {
         initComponents();
         this.prodBus = new ProductBus();
         this.order = new Order();
-        this.itemList = new ArrayList();
+        this.itemList = new ItemOrderBus();
         readProducts();
         refreshItens();
+        displayInfo();
     }
     
     //Métodos Construtores com Business
@@ -39,9 +42,10 @@ public class SalesView extends javax.swing.JInternalFrame {
         initComponents();
         this.prodBus = pb;
         this.order = new Order();
-        this.itemList = new ArrayList();
+        this.itemList = new ItemOrderBus();
         readProducts();
         refreshItens();
+        displayInfo();
     }
     
     public SalesView(ProductBus pb, OrderBus ob){
@@ -49,9 +53,10 @@ public class SalesView extends javax.swing.JInternalFrame {
         this.prodBus = pb;
         this.orderBus = ob;
         this.order = new Order();
-        this.itemList = new ArrayList();
+        this.itemList = new ItemOrderBus();
         readProducts();
         refreshItens();
+        displayInfo();
     }
     
     // </editor-fold>
@@ -98,7 +103,7 @@ public class SalesView extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) ItemTable.getModel();
         modelo.setNumRows(0);
         
-        itemList.stream().forEach((_item) -> {
+        itemList.getItemList().stream().forEach((_item) -> {
             modelo.addRow(new Object[]{
                 _item.getProduct().getID(),
                 _item.getProduct().getDescription(),
@@ -106,6 +111,61 @@ public class SalesView extends javax.swing.JInternalFrame {
                 _item.getValue()
             });
         });
+    }
+    
+    private void refoundProduct(Product _product, int amount){
+        
+        for (int i = 0; i < ProductTable.getRowCount(); i++){
+            
+            if(_product.getID() == (int) ProductTable.getValueAt(i, 0)){
+                
+                ProductTable.setValueAt((int) ProductTable.getValueAt(i, 2) + amount, i, 2);
+                break;
+            }
+        }
+    }
+    
+    private double getPrice(int _ID){
+        
+        for (int i = 0; i < ProductTable.getRowCount(); i++){
+            
+            if(_ID == (int) ProductTable.getValueAt(i, 0)){
+                
+                return (double) ProductTable.getValueAt(i, 3);
+            }
+        }
+        
+        return 0.0;
+    }
+    
+    private void displayInfo(){
+        
+        //Definindo formatação padrão para data e ID
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        StringBuilder number = new StringBuilder();
+        StringBuilder amount = new StringBuilder();
+        StringBuilder subtotal = new StringBuilder();
+        number.append(orderBus.getID());
+        amount.append(itemAmount);
+        subtotal.append(totalValue);
+        
+        //Exibindo os Dados do Pedido
+        outNumber.setText(number.toString());
+        outDate.setText(dateFormat.format(order.getDate()));
+        outAmount.setText(amount.toString());
+        outTotal.setText(subtotal.toString());
+        
+    }
+    
+    private void reset(){
+        
+        //Resetando a Tela para uso após conclusão de uma venda ou cancelamento da mesma
+        this.itemAmount = 0;
+        this.totalValue = 0.0;
+        this.order = new Order();
+        this.itemList = new ItemOrderBus();
+        readProducts();
+        refreshItens();
     }
     
     // </editor-fold>
@@ -124,6 +184,17 @@ public class SalesView extends javax.swing.JInternalFrame {
         btnAdd = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnRemoveAll = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lblAmount = new javax.swing.JLabel();
+        outAmount = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        outTotal = new javax.swing.JLabel();
+        lblNumber = new javax.swing.JLabel();
+        outNumber = new javax.swing.JLabel();
+        lblDate = new javax.swing.JLabel();
+        outDate = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setClosable(true);
@@ -199,6 +270,9 @@ public class SalesView extends javax.swing.JInternalFrame {
         btnSale.setForeground(new java.awt.Color(255, 255, 255));
         btnSale.setText("Realizar Pedido");
         btnSale.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaleMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSaleMouseEntered(evt);
             }
@@ -211,6 +285,9 @@ public class SalesView extends javax.swing.JInternalFrame {
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
             }
@@ -241,8 +318,9 @@ public class SalesView extends javax.swing.JInternalFrame {
         );
 
         pannelAdditions.setBackground(getBackground());
-        pannelAdditions.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        pannelAdditions.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Adicionar Produtos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
+        btnAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAdd.setText("+");
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -250,11 +328,25 @@ public class SalesView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnRemove.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRemove.setText("-");
+        btnRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRemoveMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Adicione ou Remova um Produto");
+
+        btnRemoveAll.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRemoveAll.setText("X");
+        btnRemoveAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRemoveAllMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pannelAdditionsLayout = new javax.swing.GroupLayout(pannelAdditions);
         pannelAdditions.setLayout(pannelAdditionsLayout);
@@ -263,14 +355,16 @@ public class SalesView extends javax.swing.JInternalFrame {
             .addGroup(pannelAdditionsLayout.createSequentialGroup()
                 .addGroup(pannelAdditionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pannelAdditionsLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel1))
+                    .addGroup(pannelAdditionsLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
                         .addComponent(btnAdd)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemove))
-                    .addGroup(pannelAdditionsLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel1)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(btnRemove)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRemoveAll)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pannelAdditionsLayout.setVerticalGroup(
             pannelAdditionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,8 +373,97 @@ public class SalesView extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pannelAdditionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
-                    .addComponent(btnRemove))
+                    .addComponent(btnRemove)
+                    .addComponent(btnRemoveAll))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBackground(getBackground());
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nota de Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
+        lblAmount.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblAmount.setForeground(new java.awt.Color(255, 255, 255));
+        lblAmount.setText("Quantidade de Itens . . . . .");
+
+        outAmount.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        outAmount.setForeground(new java.awt.Color(255, 255, 255));
+        outAmount.setText("0");
+
+        lblTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotal.setText("Valor Total  . . . . . . . R$");
+
+        outTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        outTotal.setForeground(new java.awt.Color(255, 255, 255));
+        outTotal.setText("0.0");
+
+        lblNumber.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblNumber.setForeground(new java.awt.Color(255, 255, 255));
+        lblNumber.setText("Número Pedido  . . . . . . . . .");
+
+        outNumber.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        outNumber.setForeground(new java.awt.Color(255, 255, 255));
+        outNumber.setText("0");
+
+        lblDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblDate.setForeground(new java.awt.Color(255, 255, 255));
+        lblDate.setText("Data Emissão : ");
+
+        outDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        outDate.setForeground(new java.awt.Color(255, 255, 255));
+        outDate.setText("00/00/0000");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblAmount)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(outAmount))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTotal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(outTotal))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblNumber)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(outNumber))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblDate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(outDate)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumber)
+                    .addComponent(outNumber))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDate)
+                    .addComponent(outDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAmount)
+                    .addComponent(outAmount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTotal)
+                    .addComponent(outTotal))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -293,10 +476,11 @@ public class SalesView extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pannelAdditions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pannelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pannelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +489,9 @@ public class SalesView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pannelAdditions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(pannelActions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
@@ -315,7 +501,7 @@ public class SalesView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    // <editor-fold defaultstate="collapsed" desc="Animaões">
+    // <editor-fold defaultstate="collapsed" desc="Animações">
     
     private void btnSaleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaleMouseEntered
         // Mouse Sobre Botão Vender
@@ -351,16 +537,24 @@ public class SalesView extends javax.swing.JInternalFrame {
             
             //Verifica se há produtos em estoque para venda
             if ((int) ProductTable.getValueAt(ProductTable.getSelectedRow(), 2) > 0){
+                
+                Product _product = new Product();
             
                 if (isAdded()){
-                    //Tem
-                    JOptionPane.showMessageDialog(null, "Entrou aqui");
+                    
+                    //Tem - Localizando Informações do Item
+                    _product.setID((int) ProductTable.getValueAt(ProductTable.getSelectedRow(), 0));                   
+                    ProductTable.setValueAt((int) ProductTable.getValueAt(ProductTable.getSelectedRow(), 2) - 1, ProductTable.getSelectedRow(), 2);          
+                    totalValue += (double) ProductTable.getValueAt(ProductTable.getSelectedRow(), 3);
+                    
+                    //Atualizando o item do pedido
+                    itemList.editItem(_product);
+                    
                 }
                 else{
 
                     //Não Tem - Criando Instancia de Objetos
                     ItemOrder _item = new ItemOrder();
-                    Product _product = new Product();
 
                     //Alimentando Objetos
                     _product.setID((int) ProductTable.getValueAt(ProductTable.getSelectedRow(), 0));
@@ -368,15 +562,20 @@ public class SalesView extends javax.swing.JInternalFrame {
                     _product.setAmount((int) ProductTable.getValueAt(ProductTable.getSelectedRow(), 2));
                     ProductTable.setValueAt((int) ProductTable.getValueAt(ProductTable.getSelectedRow(), 2) - 1, ProductTable.getSelectedRow(), 2);
                     _product.setPrice((double) ProductTable.getValueAt(ProductTable.getSelectedRow(), 3));
+                    totalValue += (double) ProductTable.getValueAt(ProductTable.getSelectedRow(), 3);
                     _item.setProduct(_product);
                     _item.setAmount(1);
                     _item.setValue(_product.getPrice() * _item.getAmount());
-                    itemList.add(_item);
+                    
+                    //Adicionando novo item para pedido
+                    itemList.addItem(_item);
 
                 }
                 
                 //Atualizando Tabela
+                itemAmount++;
                 refreshItens();
+                displayInfo();
                 
             }
             else{
@@ -389,6 +588,92 @@ public class SalesView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAddMouseClicked
 
+    private void btnRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveMouseClicked
+        // Ações Botão Delete
+        if (ItemTable.getSelectedRow() != -1){
+            
+            Product _product = new Product();
+            
+            //Verificando se o item selecionado possúi mais de uma unidade
+            if ((int) ItemTable.getValueAt(ItemTable.getSelectedRow(), 2) > 1){
+                
+                //Nesse caso so removerá uma unidade do item selecionado
+                _product.setID((int) ItemTable.getValueAt(ItemTable.getSelectedRow(), 0));
+                this.totalValue -= getPrice(_product.getID());
+                
+                //Retornando uma unidade para tabela de produtos
+                refoundProduct(_product, 1);
+                 
+                itemList.removeItem(_product);
+            }
+            else{
+                
+                //Nesse caso removerá o item selecionado do pedido
+                _product.setID((int) ItemTable.getValueAt(ItemTable.getSelectedRow(), 0));
+                this.totalValue -= getPrice(_product.getID());
+                
+                //Retornando uma unidade para tabela de produtos
+                refoundProduct(_product, 1);
+                 
+                itemList.removeAllItens(_product);
+            }
+            
+            //Atualizando Tabela
+            itemAmount--;
+            refreshItens();
+            displayInfo();
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione Algum item para realizar essa Ação!");
+        }
+    }//GEN-LAST:event_btnRemoveMouseClicked
+
+    private void btnRemoveAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveAllMouseClicked
+        // Ações Botão RemoveAll
+        if (ItemTable.getSelectedRow() != -1){
+            
+            //Instanciando um produto e quantidade para transação
+            Product _product = new Product();
+            int amount = (int) ItemTable.getValueAt(ItemTable.getSelectedRow(), 2);
+            
+            //Nesse caso so removerá uma unidade do item selecionado
+            _product.setID((int) ItemTable.getValueAt(ItemTable.getSelectedRow(), 0));           
+                     
+            //Retornando uma unidade para tabela de produtos
+            refoundProduct(_product, amount);
+                 
+            itemList.removeAllItens(_product);
+            
+            //Atualizando Tabela
+            itemAmount -= amount;
+            this.totalValue -= getPrice(_product.getID()) * amount;
+            refreshItens();
+            displayInfo();
+            
+        }
+        else{
+            
+            JOptionPane.showMessageDialog(null, "Selecione Algum item para realizar essa Ação!");
+        }
+    }//GEN-LAST:event_btnRemoveAllMouseClicked
+
+    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
+        // Ações Botão Cancelar
+        int cancel = JOptionPane.showConfirmDialog(null, "Deseja Cancelar Operação?");
+        
+        if (cancel == 0){
+            //Cancelando a Operação de Venda
+            reset();
+            JOptionPane.showMessageDialog(null, "Operação Cancelada por Usuário!");
+        }
+        
+    }//GEN-LAST:event_btnCancelMouseClicked
+
+    private void btnSaleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaleMouseClicked
+        // Ações Botão Realizar Pedido
+    }//GEN-LAST:event_btnSaleMouseClicked
+
     // </editor-fold>
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -397,10 +682,21 @@ public class SalesView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JLabel btnCancel;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnRemoveAll;
     private javax.swing.JLabel btnSale;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAmount;
+    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblNumber;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel outAmount;
+    private javax.swing.JLabel outDate;
+    private javax.swing.JLabel outNumber;
+    private javax.swing.JLabel outTotal;
     private javax.swing.JPanel pannelActions;
     private javax.swing.JPanel pannelAdditions;
     // End of variables declaration//GEN-END:variables

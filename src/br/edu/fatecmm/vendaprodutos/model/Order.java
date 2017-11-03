@@ -10,12 +10,14 @@ public class Order {
     //Atributos
     private int ID;
     private Date date;
+    private double subtotal;
     private final List<ItemOrder> itens;
     
     //Método Construtor Padrão
     public Order(){
         //Inicia os objetos
         this.ID = 0;
+        this.subtotal = 0.0;
         this.date = new Date();
         this.itens = new ArrayList();
     }
@@ -40,14 +42,26 @@ public class Order {
     public List<ItemOrder> getItens() {
         return itens;
     }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
     
     //Métodos de Classe
     public void addItem(ItemOrder item){
         itens.add(item);
     }
     
-    public void removeItem(ItemOrder item){
-        itens.remove(item);
+    public void generateSubtotal(){
+        
+        itens.stream().forEach((ItemOrder _item) -> {
+            
+            subtotal += _item.getValue();
+        });
     }
     
 }
