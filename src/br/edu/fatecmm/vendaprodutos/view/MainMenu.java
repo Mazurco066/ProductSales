@@ -5,6 +5,7 @@
  */
 package br.edu.fatecmm.vendaprodutos.view;
 
+import br.edu.fatecmm.vendaprodutos.business.OrderBus;
 import br.edu.fatecmm.vendaprodutos.business.ProductBus;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,10 +20,12 @@ public class MainMenu extends javax.swing.JFrame {
     
     //Atributos
     protected ProductBus bus;
+    protected OrderBus oBus;
     
     public MainMenu() {
         initComponents();
         this.bus = new ProductBus();
+        this.oBus = new OrderBus();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -238,7 +241,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void btnSalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalesMouseClicked
         // Código para o botão vendas
-        SalesView sales = new SalesView(bus);
+        SalesView sales = new SalesView(bus, oBus);
         painelInterno.add(sales);
         sales.setVisible(true);
         sales.setBorder(BorderFactory.createLineBorder(Color.lightGray, 4));
