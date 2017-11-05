@@ -11,6 +11,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /** @author Mazurco066 */
@@ -35,6 +36,8 @@ public class SalesView extends javax.swing.JInternalFrame {
         readProducts();
         refreshItens();
         displayInfo();
+        ProductTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ItemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     //Métodos Construtores com Business
@@ -46,6 +49,8 @@ public class SalesView extends javax.swing.JInternalFrame {
         readProducts();
         refreshItens();
         displayInfo();
+        ProductTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ItemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     public SalesView(ProductBus pb, OrderBus ob){
@@ -57,6 +62,8 @@ public class SalesView extends javax.swing.JInternalFrame {
         readProducts();
         refreshItens();
         displayInfo();
+        ProductTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ItemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     // </editor-fold>

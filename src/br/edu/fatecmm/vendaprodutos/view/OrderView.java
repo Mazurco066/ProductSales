@@ -8,6 +8,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /** @author Mazurco066 */
@@ -24,6 +25,8 @@ public class OrderView extends javax.swing.JInternalFrame {
         this.bus = new OrderBus();
         readOrders();
         clearItens();
+        OrderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
     }
     
     //Método Construtor Personalizado
@@ -32,6 +35,7 @@ public class OrderView extends javax.swing.JInternalFrame {
         this.bus = bus;
         readOrders();
         clearItens();
+        OrderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     // </editor-fold>

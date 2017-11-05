@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /** @author Mazurco066 */
@@ -20,6 +21,7 @@ public class ProductView extends javax.swing.JInternalFrame {
     public ProductView() {
         initComponents();
         read();
+        ProductTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     //Construtor customizado para receber o bus de produtos
@@ -27,6 +29,7 @@ public class ProductView extends javax.swing.JInternalFrame {
         initComponents();
         this.bus = pb;
         read();
+        ProductTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
     // </editor-fold>
