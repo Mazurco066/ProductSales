@@ -183,13 +183,13 @@ public class SalesView extends javax.swing.JInternalFrame {
         pannelAdditions = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblInst = new javax.swing.JLabel();
         btnRemoveAll = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        pannelInvoice = new javax.swing.JPanel();
         lblAmount = new javax.swing.JLabel();
         outAmount = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        spInvoice = new javax.swing.JSeparator();
         outTotal = new javax.swing.JLabel();
         lblNumber = new javax.swing.JLabel();
         outNumber = new javax.swing.JLabel();
@@ -336,9 +336,9 @@ public class SalesView extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Adicione ou Remova um Produto");
+        lblInst.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblInst.setForeground(new java.awt.Color(255, 255, 255));
+        lblInst.setText("Adicione ou Remova um Produto");
 
         btnRemoveAll.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRemoveAll.setText("X");
@@ -356,7 +356,7 @@ public class SalesView extends javax.swing.JInternalFrame {
                 .addGroup(pannelAdditionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pannelAdditionsLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jLabel1))
+                        .addComponent(lblInst))
                     .addGroup(pannelAdditionsLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(btnAdd)
@@ -369,7 +369,7 @@ public class SalesView extends javax.swing.JInternalFrame {
         pannelAdditionsLayout.setVerticalGroup(
             pannelAdditionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pannelAdditionsLayout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(lblInst)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pannelAdditionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
@@ -378,8 +378,8 @@ public class SalesView extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(getBackground());
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nota de Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        pannelInvoice.setBackground(getBackground());
+        pannelInvoice.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nota de Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         lblAmount.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblAmount.setForeground(new java.awt.Color(255, 255, 255));
@@ -413,54 +413,54 @@ public class SalesView extends javax.swing.JInternalFrame {
         outDate.setForeground(new java.awt.Color(255, 255, 255));
         outDate.setText("00/00/0000");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pannelInvoiceLayout = new javax.swing.GroupLayout(pannelInvoice);
+        pannelInvoice.setLayout(pannelInvoiceLayout);
+        pannelInvoiceLayout.setHorizontalGroup(
+            pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pannelInvoiceLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spInvoice)
+                    .addGroup(pannelInvoiceLayout.createSequentialGroup()
+                        .addGroup(pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pannelInvoiceLayout.createSequentialGroup()
                                 .addComponent(lblAmount)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outAmount))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(pannelInvoiceLayout.createSequentialGroup()
                                 .addComponent(lblTotal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outTotal))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(pannelInvoiceLayout.createSequentialGroup()
                                 .addComponent(lblNumber)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outNumber))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(pannelInvoiceLayout.createSequentialGroup()
                                 .addComponent(lblDate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outDate)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pannelInvoiceLayout.setVerticalGroup(
+            pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pannelInvoiceLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNumber)
                     .addComponent(outNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDate)
                     .addComponent(outDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAmount)
                     .addComponent(outAmount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pannelInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTotal)
                     .addComponent(outTotal))
                 .addGap(26, 26, 26))
@@ -477,7 +477,7 @@ public class SalesView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pannelAdditions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pannelActions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pannelInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -490,7 +490,7 @@ public class SalesView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pannelAdditions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pannelInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(pannelActions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
@@ -682,6 +682,8 @@ public class SalesView extends javax.swing.JInternalFrame {
             order.addItem(_item); 
         });
         order.generateSubtotal();
+        order.generateItemAmount();
+        orderBus.addOrder(order);
         
         //Pedido Emitido com Sucesso
         JOptionPane.showMessageDialog(null, "Venda Realizada com Valor Total de R$" + order.getSubtotal());
@@ -700,13 +702,11 @@ public class SalesView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnRemoveAll;
     private javax.swing.JLabel btnSale;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAmount;
     private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblInst;
     private javax.swing.JLabel lblNumber;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel outAmount;
@@ -715,5 +715,7 @@ public class SalesView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel outTotal;
     private javax.swing.JPanel pannelActions;
     private javax.swing.JPanel pannelAdditions;
+    private javax.swing.JPanel pannelInvoice;
+    private javax.swing.JSeparator spInvoice;
     // End of variables declaration//GEN-END:variables
 }

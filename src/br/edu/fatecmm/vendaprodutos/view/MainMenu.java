@@ -54,6 +54,9 @@ public class MainMenu extends javax.swing.JFrame {
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Consultas");
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSearchMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSearchMouseEntered(evt);
             }
@@ -247,6 +250,15 @@ public class MainMenu extends javax.swing.JFrame {
         sales.setBorder(BorderFactory.createLineBorder(Color.lightGray, 4));
         sales.setCenter();
     }//GEN-LAST:event_btnSalesMouseClicked
+
+    private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
+        // Código botão Consultas
+        OrderView order = new OrderView(oBus);
+        painelInterno.add(order);
+        order.setVisible(true);
+        order.setBorder(BorderFactory.createLineBorder(Color.lightGray, 4));
+        order.setCenter();
+    }//GEN-LAST:event_btnSearchMouseClicked
     // </editor-fold>
     
     public static void main(String args[]) {

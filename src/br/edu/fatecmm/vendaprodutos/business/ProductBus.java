@@ -39,7 +39,6 @@ public class ProductBus {
     
     public void addProduct(Product p){
         this.products.add(p);
-        JOptionPane.showMessageDialog(null, "Produto Adicionado!");
     }
     
     public void editProduct(Product p){

@@ -10,6 +10,7 @@ public class Order {
     //Atributos
     private int ID;
     private Date date;
+    private int itemAmount;
     private double subtotal;
     private final List<ItemOrder> itens;
     
@@ -50,6 +51,14 @@ public class Order {
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
+
+    public int getItemAmount() {
+        return itemAmount;
+    }
+
+    public void setItemAmount(int itemAmount) {
+        this.itemAmount = itemAmount;
+    }
     
     //Métodos de Classe
     public void addItem(ItemOrder item){
@@ -58,9 +67,25 @@ public class Order {
     
     public void generateSubtotal(){
         
+        //Zerando atributo
+        subtotal = 0;
+        
+        //Calculando novo valor
         itens.stream().forEach((ItemOrder _item) -> {
             
             subtotal += _item.getValue();
+        });
+    }
+    
+    public void generateItemAmount(){
+        
+        //Zerando atributo
+        itemAmount = 0;
+        
+        //Calculando novo valor
+        itens.stream().forEach((ItemOrder _item) -> {
+            
+            itemAmount += _item.getAmount();
         });
     }
     
