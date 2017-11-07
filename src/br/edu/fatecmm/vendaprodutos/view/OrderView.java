@@ -164,7 +164,7 @@ public class OrderView extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Selecione um pedido da tabela ");
 
-        setBackground(new java.awt.Color(0, 153, 153));
+        setBackground(new java.awt.Color(165, 182, 211));
         setClosable(true);
         setTitle("Consultar Pedidos");
         setPreferredSize(new java.awt.Dimension(700, 600));

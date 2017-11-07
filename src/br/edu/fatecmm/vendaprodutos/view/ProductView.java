@@ -132,7 +132,6 @@ public class ProductView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         ProductTable = new javax.swing.JTable();
         txtSearch = new javax.swing.JTextField();
@@ -148,7 +147,7 @@ public class ProductView extends javax.swing.JInternalFrame {
         btnEdit = new javax.swing.JLabel();
         btnDelete = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(0, 153, 153));
+        setBackground(new java.awt.Color(165, 182, 211));
         setClosable(true);
         setTitle("Cadastro de Produtos");
 
@@ -625,7 +624,6 @@ public class ProductView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel btnAdd;
     private javax.swing.JLabel btnDelete;
     private javax.swing.JLabel btnEdit;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel buttonsPannel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

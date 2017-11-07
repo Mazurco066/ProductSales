@@ -203,7 +203,7 @@ public class SalesView extends javax.swing.JInternalFrame {
         lblDate = new javax.swing.JLabel();
         outDate = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(0, 153, 153));
+        setBackground(new java.awt.Color(165, 182, 211));
         setClosable(true);
         setTitle("Venda de Produtos");
         setPreferredSize(new java.awt.Dimension(1000, 600));

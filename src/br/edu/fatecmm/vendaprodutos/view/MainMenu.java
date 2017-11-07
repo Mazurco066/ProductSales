@@ -31,13 +31,16 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("../images/background.png"));
-        Image image = icon.getImage();
+        //ImageIcon icon = new ImageIcon(getClass().getResource("../images/background.png"));
+        //Image image = icon.getImage();
         painelInterno = new javax.swing.JDesktopPane(){
 
+            /*
+            Ativar esse fragmento de código caso desejar utilizar a imagem como background
             public void paintComponent(Graphics g){
                 g.drawImage(image,0,0,getWidth(),getHeight(),this);
             }
+            */
         };
         btnSearch = new javax.swing.JLabel();
         btnProduct = new javax.swing.JLabel();
@@ -49,6 +52,8 @@ public class MainMenu extends javax.swing.JFrame {
         setTitle("Main Menu");
         setPreferredSize(new java.awt.Dimension(1024, 700));
         setResizable(false);
+
+        painelInterno.setBackground(new java.awt.Color(86, 116, 165));
 
         btnSearch.setFont(new java.awt.Font("Roboto Th", 1, 48)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
