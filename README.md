@@ -1,6 +1,6 @@
 # ProductSales
 
-Software desenvolvido com intuíto de ser um dos projetos avaliativos que compoem a nota da disciplina de POO.
+Software desenvolvido com intuito de ser um dos projetos avaliativos que compoem a nota da disciplina de POO.
 
 ## Desenvolvedor
 
