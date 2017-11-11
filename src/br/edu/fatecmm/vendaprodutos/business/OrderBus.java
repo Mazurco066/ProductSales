@@ -32,10 +32,22 @@ public class OrderBus {
     }
     
     //Métodos de Negócio
+    
+    /**
+     * Método para incrementar ID dessa classe bus.
+     * ID autoincrementável é um dos recursos que esse
+     * sistema possúi.
+     */
     public void increment(){
         this.ID++;
     }
     
+    /**
+     * Método que armazena pedidos feitos no sistema.
+     * 
+     * @param order 
+     *      - Recebe o pedido que deve ser adicionado.
+     */
     public void addOrder(Order order){
         orders.add(order);
     }
