@@ -42,17 +42,34 @@ public class OrderView extends javax.swing.JInternalFrame {
     
     // <editor-fold defaultstate="collapsed" desc="Métodos Gerais">
     
+    /**
+     * Método para centralizar form no DesktopPane.
+     */
     public void setCenter(){
         
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
     
+    /**
+     * Método para validar se ha texto no campo de busca.
+     * 
+     * @return 
+     *      - Retorna true se a validação for valida e false se resultar
+     *      em inválida. 
+     */
     private boolean isValidSearch(){
         
         return !(txtOrderID.getText().equals("Digite ID do Pedido Aqui") || txtOrderID.getText().equals(""));
     }
     
+    /**
+     * Método para verificar se buscas que se deseja
+     * realizar é de formato numérico.
+     * 
+     * @return 
+     *      - Retorna true se válido e false se inválido.
+     */
     private boolean isNumberSearch(){
         
         try{
@@ -65,6 +82,10 @@ public class OrderView extends javax.swing.JInternalFrame {
         return Integer.parseInt(txtOrderID.getText()) >= 0;
     }
     
+    /**
+     * Método que preenche a tabela com todos os pedidos realizados
+     * no sistema no menu de vendas.
+     */
     private void readOrders(){
         
         DefaultTableModel modelo = (DefaultTableModel) OrderTable.getModel();
@@ -81,12 +102,25 @@ public class OrderView extends javax.swing.JInternalFrame {
         
     }
     
+    /**
+     * Método para Limpar a tabela de itens de pedidos
+     * reaalizados.
+     */
     private void clearItens(){
         
         DefaultTableModel modelo = (DefaultTableModel) ItemTable.getModel();
         modelo.setNumRows(0);
     }
     
+    /**
+     * Método para preencher a tabela de itens com com
+     * os itens presentes no pedido selecionado pelo
+     * usuário.
+     * 
+     * @param order
+     *      - Recebe o pedido no qual se deseja verificar
+     *      os itens presentes.
+     */
     private void readItens(Order order){
         
         DefaultTableModel modelo = (DefaultTableModel) ItemTable.getModel();
@@ -119,6 +153,16 @@ public class OrderView extends javax.swing.JInternalFrame {
         });
     }
     
+    /**
+     * Método que recupera um pedido indormando seu ID.
+     * 
+     * @param ID
+     *      - Recebe o ID do pedido a ser buscado.
+     * 
+     * @return 
+     *      - Retorna o pedido encontrado caso contrário
+     *      não retornará nada.
+     */
     private Order getOrder(int ID){
         
         for (Order _item: bus.getOrders()){

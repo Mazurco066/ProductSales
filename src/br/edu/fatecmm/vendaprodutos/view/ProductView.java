@@ -37,6 +37,10 @@ public class ProductView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Métodos Gerais"> 
     
     //Método Centralizador
+    
+    /**
+     * Método que centraliza tela no DesktopPane.
+     */
     public void setCenter(){
         
         Dimension d = this.getDesktopPane().getSize();
@@ -44,6 +48,15 @@ public class ProductView extends javax.swing.JInternalFrame {
     }
     
     //Método Validador de Campos
+    
+    /**
+     * Método que valida se os campos de preenchimento
+     * obrigatórios estão devidamente preenchidos.
+     * 
+     * @return 
+     *      - Retorna true se estiver tudo ok e false 
+     *      se algum campo necessitar de preenchimento.
+     */
     private boolean isValidFields(){
         
         return !(
@@ -57,6 +70,14 @@ public class ProductView extends javax.swing.JInternalFrame {
         
     }
     
+    /**
+     * Método que verifica se os campos obrigatórios
+     * numéricos foram devidamente preenchidos com números.
+     * 
+     * @return 
+     *      - Retorna true se tudo estiver válido e false
+     *      se estiver inválido.
+     */
     private boolean isValidNumbers(){
         
         try{
@@ -73,6 +94,10 @@ public class ProductView extends javax.swing.JInternalFrame {
             
     }
     
+    /**
+     * Método que Limpa as caixas de texto presentes
+     * nesse formulário.
+     */
     private void clear(){
         
         /*
@@ -92,6 +117,11 @@ public class ProductView extends javax.swing.JInternalFrame {
         txtPrice.setText("Valor Unitário");
     }
     
+    /**
+     * Método que recupera todos os produtos cadastrados e os mostra
+     * em uma tabela de produtos localizado na parte de baixo do
+     * formulário.
+     */
     private void read(){
         
         //Definindo o Objeto para Alimentar a Lista
@@ -110,6 +140,14 @@ public class ProductView extends javax.swing.JInternalFrame {
         
     }
     
+    /**
+     * Método que recupera produtos cadastrados que 
+     * se encaixam com a busca feita pelo usuário.
+     * 
+     * @param search
+     *      - Recebe a String de busca informada pelo
+     *      usuário.
+     */
     private void readForDesc(String search){
         
         //Definindo o Objeto para Alimentar a Lista

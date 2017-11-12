@@ -70,12 +70,22 @@ public class SalesView extends javax.swing.JInternalFrame {
     
     // <editor-fold defaultstate="collapsed" desc="Métodos Gerais">
     
+    /**
+     * Método para centralizar tela no DesktopPane.
+     */
     public void setCenter(){
         
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
     
+    /**
+     * Método para verificar se produto selecionado ja foi adicionado
+     * a venda.
+     * 
+     * @return 
+     *      - Retorna true se sim e false se não.
+     */
     private boolean isAdded(){
         
         for (int i = 0; i < ItemTable.getRowCount(); i++){
@@ -88,6 +98,11 @@ public class SalesView extends javax.swing.JInternalFrame {
         return false;
     }
     
+    /**
+     * Método que recupera todos os produtos cadastrados
+     * e os coloca na tabela de produtos no lado esquerdo
+     * da tela.
+     */
     private void readProducts(){
         
         //Definindo o Objeto para Alimentar a Lista
@@ -105,6 +120,11 @@ public class SalesView extends javax.swing.JInternalFrame {
         });
     }
     
+    /**
+     * Método para ler todos os itens adicionados ao pedido
+     * e atualizar a tabela com as novas atualizações de 
+     * quantidade.
+     */
     private void refreshItens(){
         
         DefaultTableModel modelo = (DefaultTableModel) ItemTable.getModel();
@@ -120,6 +140,16 @@ public class SalesView extends javax.swing.JInternalFrame {
         });
     }
     
+    /**
+     * Método para devolver a quantidade de itens de um
+     * produto quando remover um item do pedido.
+     * 
+     * @param _product
+     *      - Recebe o produto a ser reestocado.
+     * 
+     * @param amount 
+     *      - Recebe a quantidade a ser reestocada.
+     */
     private void refoundProduct(Product _product, int amount){
         
         for (int i = 0; i < ProductTable.getRowCount(); i++){
@@ -132,6 +162,16 @@ public class SalesView extends javax.swing.JInternalFrame {
         }
     }
     
+    /**
+     * Método que recupera o valor unitário do produto
+     * selecionado.
+     * 
+     * @param _ID
+     *      - Recebe o Id do produto selecionado.
+     * 
+     * @return 
+     *      - Retorna seu preço.
+     */
     private double getPrice(int _ID){
         
         for (int i = 0; i < ProductTable.getRowCount(); i++){
@@ -145,6 +185,11 @@ public class SalesView extends javax.swing.JInternalFrame {
         return 0.0;
     }
     
+    /**
+     * Método que informa ao usuário as informações da atual compra,
+     * mostra quantidade de itens, subtotal, data , etc. Simula uma
+     * nota fiscál na tela de venda de produtos.
+     */
     private void displayInfo(){
         
         //Definindo formatação padrão para data e ID
@@ -164,6 +209,10 @@ public class SalesView extends javax.swing.JInternalFrame {
         
     }
     
+    /**
+     * Método que retorna os dados dessa classe a origem, 
+     * ou seja, aos valores iniciais dos atributos.
+     */
     private void reset(){
         
         //Resetando a Tela para uso após conclusão de uma venda ou cancelamento da mesma
