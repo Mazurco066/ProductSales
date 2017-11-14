@@ -46,7 +46,7 @@ public class ItemOrderBus {
         
         itemList.stream().forEach((ItemOrder _item) -> {
             
-            if (_product.getID() == _item.getProduct().getID()){
+            if (_product.equals(_item.getProduct())){
                 
                 _item.setAmount(_item.getAmount() + 1);
                 _item.setValue(_item.getAmount() * _item.getProduct().getPrice());
@@ -66,7 +66,7 @@ public class ItemOrderBus {
         
         for(ItemOrder _item: itemList){
             
-            if (_product.getID() == _item.getProduct().getID()){
+            if (_product.equals(_item.getProduct())){
                 
                 _item.setAmount(_item.getAmount() - 1);
                 _item.setValue(_item.getAmount() * _item.getProduct().getPrice());
@@ -86,7 +86,7 @@ public class ItemOrderBus {
         
         for(ItemOrder _item: itemList){
             
-            if (_product.getID() == _item.getProduct().getID()){
+            if (_product.equals(_item.getProduct())){
                 
                 itemList.remove(_item);
                 break;

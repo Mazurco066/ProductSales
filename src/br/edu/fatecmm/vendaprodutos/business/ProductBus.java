@@ -62,8 +62,8 @@ public class ProductBus {
         
         products.stream().forEach((Product _item) ->{
             
-            if (p.getID() == _item.getID()){
-                
+            if (p.equals(_item)){
+            
                 _item.setDescription(p.getDescription());
                 _item.setAmount(p.getAmount());
                 _item.setPrice(p.getPrice());
@@ -81,15 +81,8 @@ public class ProductBus {
      */
     public void deleteProduct(Product p){
         
-        for(Product _item: products){
-            
-            if (p.getID() == _item.getID()){
-                
-                products.remove(_item);
-                break;
-                
-            }
-        }
+        if (products.contains(p)) products.remove(p);
+        
     }
     
     /**

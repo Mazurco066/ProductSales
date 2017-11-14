@@ -60,6 +60,32 @@ public class Order {
         this.itemAmount = itemAmount;
     }
     
+    //Método equals e HashCode
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Order other = (Order) obj;
+        
+        return this.ID == other.ID;
+    }
+
+    @Override
+    public int hashCode() {
+        
+        int hash = 7;
+        hash = 97 * hash + this.ID;
+        return hash;
+    }
+    
     //Métodos de Classe
     public void addItem(ItemOrder item){
         itens.add(item);
